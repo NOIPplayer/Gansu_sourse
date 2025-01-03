@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/province/gansu.js"></script>
+    <style>
+        #charts-container {
+            display: flex;
+            justify-content: space-between;
+            height: 800px;
+        }
+        #heatmapChart {
+            flex: 3;
+            height: 100%;
+            margin-top: 0;
+        }
+        #lineChart {
+            flex: 2;
+            height: 70%;
+            margin-right: 60px;
+        }
+    </style>
+</head>
+
+<body id="top">
+
+    <div id="header-wrapper">
+        <div id="header-wrapper-2">
+            <div class="center-wrapper">
+    
+                <div id="header">
+                    <div id="lzu_logo"></div>
+				<div id="logo">
+                        <h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+                        <h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+                        <h2 id="site-slogan">指导老师：赵志立</h2>
+                    </div>
+    
+                    <div id="help-wrapper">
+                        <div id="help">
+    
+                            <a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+                             <a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+    
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+    <div id="navigation-wrapper">
+        <div id="navigation-wrapper-2">
+            <div class="center-wrapper">
+    
+                <div id="navigation">
+    
+                    <ul class="tabbed">
+                        <li class="current_page_item"><a href="index.html">主页</a></li>
+                        <li><a href="p1_1.html">能源消费量总览</a></li>
+                        <li><a href="p2_1.html">行业能源消费量</a></li>
+                        <li><a href="p3_1.html">生活能源消费量</a></li>
+                        <li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+                    </ul>
+    
+                    <div class="clearer">&nbsp;</div>
+    
+                </div>
+    
+            </div>
+        </div>
+    </div>
+<div class="bc">
+    <div id="charts-container">
+        <div id="heatmapChart"></div>
+        <div id="lineChart"></div>
+        <div class="index_text-container_1">
+            <p>甘肃，作为连通中原地区和西部边疆的重要枢纽，2014年到2023年间，甘肃的生产总值从6765.73亿元上升至11863.95亿元，能源消费量从7521.45万吨标准煤上升至9088.69万吨标准煤。部分市级行政区生产总值实现翻番，原先不平衡的经济发展区域格局得到明显改善。</p>
+            <p>尽管成绩斐然，但无论是生产总值增速还是能源消费量增速，甘肃均低于全国平均水平。此外，相较于全国平均水平，在能源消费量增量相同的情况下，甘肃的生产总值增长更低。</p>
+        </div>
+        <div class="clearer">&nbsp;</div>
+    </div>
+</div>
+
+    <script>
+        var data = {
+            "兰州市": [1977.8, 2102.2, 2207.4, 2445.1, 2660.2, 2852.5, 2877.5, 3227.3, 3343.5, 3487.30],
+            "嘉峪关市": [243.1, 190.04, 153.41, 210.99, 299.62, 283.41, 281.60, 326.51, 362.60, 382.79],
+            "金昌市": [245.64, 224.52, 207.82, 224.29, 264.24, 340.31, 358.62, 428.61, 522.52, 567.73],
+            "白银市": [464.49, 434.27, 442.21, 449.89, 511.60, 486.33, 497.27, 571.02, 635.53, 672.30],
+            "天水市": [496.89, 553.77, 590.51, 614.96, 652.05, 632.67, 666.90, 750.33, 813.88, 856.78],
+            "武威市": [408.53, 416.19, 461.73, 439.58, 469.27, 488.46, 526.41, 600.23, 663.40, 708.08],
+            "张掖市": [353.43, 373.53, 399.94, 404.14, 407.71, 448.73, 467.05, 526.23, 581.51, 608.01],
+            "平凉市": [335.00, 347.70, 367.30, 388.91, 395.17, 456.58, 476.16, 553.97, 641.58, 668.57],
+            "酒泉市": [620.2, 544.80, 577.93, 580.3, 596.89, 618.22, 657.75, 762.74, 840.90, 908.70],
+            "庆阳市": [668.93, 609.43, 597.83, 618.97, 708.15, 742.94, 754.73, 885.27, 1022.26, 1100.37],
+            "定西市": [267.94, 304.92, 331.08, 347.12, 356.26, 416.38, 441.36, 500.76, 557.93, 600.10],
+            "陇南市": [262.5, 315.14, 339.89, 355.28, 379.23, 445.09, 451.79, 502.53, 562.40, 602.70],
+            "临夏回族自治州": [186.05, 211.41, 230.11, 238.84, 255.35, 303.52, 331.28, 373.79, 408.60, 439.70],
+            "甘南藏族自治州": [114.92, 126.54, 135.95, 141.42, 155.73, 218.33, 219.06, 230.04, 245.12, 260.81]
+        };
+        
+        var years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+
+        var energyConsumptionData = [7521.45, 7488.5, 7299.93, 7503.63, 7822.54, 7818.02, 8104.71, 8434.23, 8667.89, 9088.69];
+
+        var totalGDP = years.map(function(year, index) {
+            var sum = 0;
+            Object.keys(data).forEach(function(city) {
+                sum += data[city][index];
+            });
+            return sum.toFixed(2);
+        });
+
+        var lineChart = echarts.init(document.getElementById('lineChart'));
+        
+        var heatmapChart = echarts.init(document.getElementById('heatmapChart'));
+
+        function generateHeatmapData(yearIndex) {
+            var heatmapData = [];
+            var cityNames = Object.keys(data);
+            for (var i = 0; i < cityNames.length; i++) {
+                heatmapData.push({
+                    name: cityNames[i],
+                    value: data[cityNames[i]][yearIndex]
+                });
+            }
+            return heatmapData;
+        }
+
+        function updateHeatmap(yearIndex) {
+            var heatmapOption = {
+                title: {
+                    text: years[yearIndex] + '年甘肃省各市GDP热度图',
+                    left: 'center',
+                    top: '10px'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: function (params) {
+                        return params.name + ": " + params.value + " 亿元";
+                    }
+                },
+                visualMap: {
+                    min: 0,
+                    max: 3500,
+                    left: '10%',
+                    top: '65%',
+                    text: ['高', '低'],
+                    calculable: true
+                },
+                series: [{
+                    type: 'map',
+                    mapType: '甘肃',
+                    roam: true,
+                    label: {
+                        show: true,
+                        formatter: function (params){
+                            var customNames = {
+                                "兰州市": "兰州",
+                                "嘉峪关市": "嘉峪关",
+                                "金昌市": "金昌",
+                                "白银市": "白银",
+                                "天水市": "天水",
+                                "武威市": "武威",
+                                "张掖市": "张掖",
+                                "平凉市": "平凉",
+                                "酒泉市": "酒泉",
+                                "庆阳市": "庆阳",
+                                "定西市": "定西",
+                                "陇南市": "陇南",
+                                "临夏回族自治州": "临夏",
+                                "甘南藏族自治州": "甘南"
+                            };
+                            return customNames[params.name] || params.name;
+                        }
+                    },
+                    data: generateHeatmapData(yearIndex)
+                }]
+            };
+            heatmapChart.setOption(heatmapOption);
+        }
+
+        var lineOption = {
+            title: {
+                text: '甘肃省2014到2023年全省生产总值与能源消费量变化折线图',
+                left: 'center',
+                top: '10px'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'line'
+                }
+            },
+            grid: {
+                left: '5%',
+                right: '5%',
+                top: '120px',            
+                containLabel: true
+            },
+            legend: {
+                data: ['生产总值', '能源消费量'],
+                left: 'center',
+                top: '60px'
+            },
+            nameTextStyle: {
+                fontSize: 14
+            },
+            xAxis: {
+                type: 'category',
+                axisLabel: { fontSize: 14 },
+                data: years
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '生产总值（亿元）',
+                    axisLabel: {
+                        formatter: '{value}',
+                        fontSize: 14
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '能源消费量（万吨标准煤）',
+                    axisLabel: {
+                        formatter: '{value}',
+                        fontSize: 14
+                    },
+                    position: 'right',
+                    offset: 0,
+                    axisLine: {
+                        show: true
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '生产总值',
+                    type: 'line',
+                    data: totalGDP,
+                    itemStyle: {
+                        color: '#5470C6'
+                    },
+                    lineStyle: {
+                        width: 3
+                    },
+                    symbolSize: 5
+                },
+                {
+                    name: '能源消费量',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: energyConsumptionData,
+                    itemStyle: {
+                        color: '#91CC75'
+                    },
+                    lineStyle: {
+                        width: 3
+                    },
+                    symbolSize: 5
+                }
+            ]
+        };
+
+        lineChart.setOption(lineOption);
+        updateHeatmap(0);
+
+        lineChart.on('updateAxisPointer', function (event) {
+            var xAxisInfo = event.axesInfo[0];
+            if (xAxisInfo) {
+                var yearIndex = xAxisInfo.value;
+                updateHeatmap(yearIndex);
+            }
+        });
+    </script>
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span>
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						 <a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li><a href="p1_1.html">能源消费量总览</a></li>
+					<li class="current_page_item"><a href="p2_1.html">行业能源消费量</a></li>
+					<li><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+    
+    <div id="sidebar-wrapper2">
+        <div id="sidebar">
+
+            <div class="box">
+
+                <div class="box-title">切换视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="p2_1.html">综合能源</a></li>
+                        <li><a href="p2_2.html">石油</a></li>
+                        <li><a href="p2_3.html">煤炭</a></li>
+                        <li><a href="p2_4.html">电力</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">下载数据</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="data/GSsourse/3.xls">数据表1</a></li>
+                        <li><a href="data/GSsourse/4.xls">数据表2</a></li>
+                        <li><a href="data/GSsourse/5.xls">数据表3</a></li>
+                        <li><a href="data/GSsourse/6.xls">数据表4</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="treemapChart" class="p2_2"></div>
+    <div id="lineChart" class="p2_1"></div>
+    <div class="p2_1_text-container_1">
+        <p>十年来，甘肃省能源消费量中，批发、零售业和以生活能源消费为主的其他行业的能源消费量持续上升，而工业的能源消费量波动明显，但在2016年后呈现明显上升趋势。在消费量占比中，尽管工业占比有所下降，但是依然占据着绝对的主导；批发、零售行业占比从1.76%上升至4.14%；“其他”行业占比也从3.53%上升至6.69%。由此可见，虽然当前甘肃的产业相对单一，以工业为主，但近年来甘肃小微经济的上升势头迅猛。</p>
+    </div>
+    <div class="clearer">&nbsp;</div>
+
+
+</div>
+<script type="text/javascript">
+    var lineChart = echarts.init(document.getElementById('lineChart'));
+    var treemapChart = echarts.init(document.getElementById('treemapChart'));
+
+    var datasetSource = [
+        ['各行业的能源消费量', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+        ['农、林、牧、渔业', '240.61', '226.6', '237.15', '240.43', '212.35', '218.4', '234.29', '245.11', '266.1732486', '277.0144519'],
+        ['工业', '5516.83', '5334.95', '5088.87', '5192.93', '5376.79', '5271.72', '5476.01', '5710.77', '5850.49', '6005.43036'],
+        ['建筑业', '116.73', '104.39', '110.68', '121.47', '110.83', '112.67', '117.01', '121.2815292', '115.6143767', '131.63'],
+        ['交通运输、仓储和邮政业', '621.63', '568.15', '592.39', '613.22', '608.57', '621.73', '620.82', '631.4', '676.0363758', '759.34'],
+        ['批发、零售业', '120.99', '165.56', '167.85', '178.99', '220.67', '235.18', '243.04', '271.94', '268.4580966', '333.38'],
+        ['其他', '242.23', '297.1', '331.9', '345.57', '387.16', '420.18', '428.74', '459.01', '474.7882263', '538.31']
+    ];
+
+    var lineOption = {
+        tooltip: {
+            trigger: 'axis',
+            showContent: true
+        },
+        title: {
+            text: '2014-2023年各行业综合能源消费量变化折线图',
+            left: 'center',
+            top: '10px'
+        },
+        legend: {
+            orient: 'horizontal',
+            left: 'center',
+            top: '50px',
+            padding: [5, 10, 5, 10],
+            itemGap: 15,
+            itemWidth: 20,
+            itemHeight: 10
+        },
+        grid: {
+            left: '6%',
+            right: '6%',
+            top: '120px',
+            bottom: '5%',
+            containLabel: true
+        },
+        dataset: {
+            source: datasetSource
+        },
+        nameTextStyle: {
+            fontSize: 14
+        },
+        xAxis: { name: '年份', axisLabel: { fontSize: 14 }, type: 'category' },
+        yAxis: { name: '消费量（单位：万吨标准煤）', axisLabel: { fontSize: 14 } },
+        series: [
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 0, name: '农、林、牧、渔业', itemStyle: { color: '#e57373' }, lineStyle: { width: 3 }, symbolSize: 5},
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 1, name: '工业', itemStyle: { color: '#ff9f40' }, lineStyle: { width: 3 }, symbolSize: 5},
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 2, name: '建筑业', itemStyle: { color: '#36a2eb' }, lineStyle: { width: 3 }, symbolSize: 5},
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 3, name: '交通运输、仓储和邮政业', itemStyle: { color: '#ff6384' }, lineStyle: { width: 3 }, symbolSize: 5},
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 4, name: '批发、零售业', itemStyle: { color: '#9575cd' }, lineStyle: { width: 3 }, symbolSize: 5},
+            { type: 'line', smooth: true, seriesLayoutBy: 'row', dataIndex: 5, name: '其他', itemStyle: { color: '#4bc0c0' }, lineStyle: { width: 3 }, symbolSize: 5}
+        ]
+    };
+
+    //计算特定年份的总值的函数，因为树图无法直接使用{d}
+    function calculateTotalValue(yearIndex) {
+        var totalValue = 0;
+        for (var i = 1; i < datasetSource.length; i++) {
+            totalValue += parseFloat(datasetSource[i][yearIndex]);
+        }
+        return totalValue;
+    }
+
+    //更新树图数据
+    function updateTreemap(yearIndex) {
+        var totalValue = calculateTotalValue(yearIndex);
+        var updatedData = [
+            {name: '农、林、牧、渔业', value: parseFloat(datasetSource[1][yearIndex]), itemStyle: {color: '#e57373'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}},
+            {name: '工业', value: parseFloat(datasetSource[2][yearIndex]), itemStyle: {color: '#ff9f40'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}},
+            {name: '建筑业', value: parseFloat(datasetSource[3][yearIndex]), itemStyle: {color: '#36a2eb'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}},
+            {name: '交通运输、仓储和邮政业', value: parseFloat(datasetSource[4][yearIndex]), itemStyle: {color: '#ff6384'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}},
+            {name: '批发、零售业', value: parseFloat(datasetSource[5][yearIndex]), itemStyle: {color: '#9575cd'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}},
+            {name: '其他', value: parseFloat(datasetSource[6][yearIndex]), itemStyle: {color: '#4bc0c0'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / totalValue) * 100).toFixed(2) + '%'; }}}
+        ];
+
+        treemapChart.setOption({
+            title: {
+                text: datasetSource[0][yearIndex] + '各行业综合能源消费量占比树图', //动态设置树图的标题，让他随鼠标悬停位置变化
+                left: 'center',
+                top: '10px'
+            },
+            grid: {
+                left: '5%',
+                right: '5%',
+                top: '120px',            
+                bottom: '20%',
+                containLabel: true
+            },
+            series: [{
+                data: updatedData
+            }]
+        });
+    }
+
+    lineChart.on('updateAxisPointer', function (event) {
+        var xAxisInfo = event.axesInfo[0];
+        if (xAxisInfo) {
+            var yearIndex = xAxisInfo.value + 1;
+            updateTreemap(yearIndex);
+        }
+    });
+
+
+    lineChart.setOption(lineOption);
+    treemapChart.setOption({
+        title: {
+            text: '2014各行业综合能源消费量占比树图',
+            left: 'center',
+            top: '10px'
+        },
+        grid: {
+            left: '5%',
+            right: '5%',
+            top: '120px',            
+            bottom: '20%',
+            containLabel: true
+        },
+        series: [{
+            type: 'treemap',
+            id: 'treemap',
+            layout: 'realistic',
+            leafDepth: 1,
+            visualDimension: 0,
+            data: [
+                {name: '农、林、牧、渔业', value: 240.61, itemStyle: {color: '#e57373'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}},
+                {name: '工业', value: 5516.83, itemStyle: {color: '#ff9f40'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}},
+                {name: '建筑业', value: 116.73, itemStyle: {color: '#36a2eb'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}},
+                {name: '交通运输、仓储和邮政业', value: 621.63, itemStyle: {color: '#ff6384'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}},
+                {name: '批发、零售业', value: 120.99, itemStyle: {color: '#9575cd'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}},
+                {name: '其他', value: 242.23, itemStyle: {color: '#4bc0c0'}, label: {show: true, formatter: function(params) { return params.name + ':\n' + ((params.value / 6859.02) * 100).toFixed(2) + '%'; }}}
+            ]
+        }]
+    });
+</script>
+
+
+
+
+
+
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span>
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

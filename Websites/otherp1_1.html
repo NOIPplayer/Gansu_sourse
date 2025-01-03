@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						<a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li class="current_page_item"><a href="p1_1.html">能源消费量总览</a></li>
+					<li><a href="p2_1.html">行业能源消费量</a></li>
+					<li><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+    <div id="sidebar-wrapper2">
+        <div id="sidebar">
+
+            <div class="box">
+
+                <div class="box-title">切换视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="p1_1.html">总览</a></li>
+                        <li><a href="p1_2.html">电力及其他能源</a></li>
+                        <li><a href="p1_3.html">原油</a></li>
+                        <li><a href="p1_4.html">原煤</a></li>
+                        <li><a href="p1_5.html">天然气</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">对比视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="otherp1_1.html">能源消费量与生产量</a></li>
+                        <li><a href="otherp1_2.html">能源弹性系数</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">下载数据</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="data/GSsourse/1.xls">数据表1</a></li>
+                        <li><a href="data/GSsourse/2.xls">数据表2</a></li>
+                        <li><a href="data/GSsourse/8.xls">数据表3</a></li>
+                        <li><a href="data/GSsourse/9.xls">数据表4</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="chart" class="script"></div>
+    <div class="p1_2text-container_2">
+        <p>甘肃省能源消费量增长的同时，能源生产量同样在增长。在2014年至2018年五年间，甘肃省能源生产量与能源消费量的比例基本保持稳定，维持在76% - 79%之间。但在2018年后，甘肃省能源生产量飞速上升，能源生产量与能源消费量的比例从78.07%飞速上升为96.00%，几近可以做到自给自足。由此可见，甘肃正飞速摆脱“能源进口大省”的身份。</p>
+    </div>
+</div>
+
+
+    <script>
+        const data = [
+            { name: '2014', consumption: 7521.45, production: 5926.50 },
+            { name: '2015', consumption: 7488.50, production: 5816.78 },
+            { name: '2016', consumption: 7299.93, production: 5667.42 },
+            { name: '2017', consumption: 7503.63, production: 5749.10 },
+            { name: '2018', consumption: 7822.54, production: 6107.42 },
+            { name: '2019', consumption: 7818.02, production: 6394.63 },
+            { name: '2020', consumption: 8104.71, production: 6729.39 },
+            { name: '2021', consumption: 8434.23, production: 7031.70 },
+            { name: '2022', consumption: 8667.89, production: 7778.97 },
+            { name: '2023', consumption: 9088.69, production: 8725.09 }
+        ];
+
+        const percentages = data.map(item => ((item.production / item.consumption) * 100).toFixed(2));
+
+        const years = data.map(item => item.name);
+        const consumptions = data.map(item => item.consumption);
+        const productions = data.map(item => item.production);
+
+        const chart = echarts.init(document.getElementById('chart'));
+
+        const option = {
+            title: {
+                text: '2014-2023 年能源生产与消费对比簇状柱形图',
+                left: 'center',
+                top: '2%'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                },
+                formatter: params => {
+                    const year = params[0].name;
+                    const consumption = params.find(item => item.seriesName === '能源消费总量').value;
+                    const production = params.find(item => item.seriesName === '能源生产总量').value;
+                    const percentage = params.find(item => item.seriesName === '生产占消费百分比').value;
+                    return `
+                        ${year}<br/>
+                        消费量: ${consumption} 万吨标准煤<br/>
+                        生产量: ${production} 万吨标准煤<br/>
+                        生产占比: ${percentage}%
+                    `;
+                }
+            },
+            legend: {
+                data: ['能源消费总量', '能源生产总量', '生产占消费百分比'],
+                top: '7%'
+            },
+            grid: {
+                top: '12%'
+            },
+            nameTextStyle: {
+                fontSize: 14
+            },
+            xAxis: {
+                type: 'category',
+                data: years,
+                axisLabel: { fontSize: 14 },
+            },
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '能源总量 (万吨标准煤)',
+                    axisLabel: { fontSize: 14 },
+                    position: 'left'
+                },
+                {
+                    type: 'value',
+                    name: '生产占比 (%)',
+                    axisLabel: { fontSize: 14 },
+                    position: 'right'
+                }
+            ],
+            series: [
+                {
+                    name: '能源消费总量',
+                    type: 'bar',
+                    data: consumptions,
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            return Math.round(params.value);
+                        },
+                        fontSize: 10, 
+                        color: 'white'
+                    },
+                    itemStyle: {
+                        color: '#FF7F50'
+                    }
+                },
+                {
+                    name: '能源生产总量',
+                    type: 'bar',
+                    data: productions,
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        formatter: function(params) {
+                            return Math.round(params.value);
+                        },
+                        fontSize: 10, 
+                        color: 'white'
+                    },
+                    itemStyle: {
+                        color: '#4682B4'
+                    }
+                },
+                {
+                    name: '生产占消费百分比',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: percentages,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}%'
+                    },
+                    itemStyle: {
+                        color: '#229954'
+                    },
+                    lineStyle: {
+                        width: 3,
+                        type: 'solid'
+                    },
+                    symbolSize: 5
+                }
+            ]
+        };
+
+        chart.setOption(option);
+
+        window.addEventListener('resize', () => {
+            chart.resize();
+        });
+    </script>
+
+<div id="footer-wrapper">
+
+    <div class="center-wrapper">
+
+        <div id="footer">
+
+            <div class="left">
+                <a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span>
+            </div>
+
+            <div class="right">
+                <a href="#">到顶 ^</a>
+            </div>
+
+            <div class="clearer">&nbsp;</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

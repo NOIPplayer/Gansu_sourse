@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						<a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li class="current_page_item"><a href="p1_1.html">能源消费量总览</a></li>
+					<li><a href="p2_1.html">行业能源消费量</a></li>
+					<li><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+    <div id="sidebar-wrapper2">
+        <div id="sidebar">
+
+            <div class="box">
+
+                <div class="box-title">切换视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="p1_1.html">总览</a></li>
+                        <li><a href="p1_2.html">电力及其他能源</a></li>
+                        <li><a href="p1_3.html">原油</a></li>
+                        <li><a href="p1_4.html">原煤</a></li>
+                        <li><a href="p1_5.html">天然气</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">对比视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="otherp1_1.html">能源消费量与生产量</a></li>
+                        <li><a href="otherp1_2.html">能源弹性系数</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">下载数据</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="data/GSsourse/1.xls">数据表1</a></li>
+                        <li><a href="data/GSsourse/2.xls">数据表2</a></li>
+                        <li><a href="data/GSsourse/8.xls">数据表3</a></li>
+                        <li><a href="data/GSsourse/9.xls">数据表4</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="chart" class="script"></div>
+    <div class="p1_2text-container_1">
+        <p>十年来，甘肃的天然气消费量稳定上升，从2014年到2023年消费量几乎翻了一番。而天然气消费量的占比同样稳定上升，这说明天然气消费量的增长要快于整体能源消费量的增长。天然气作为一种在生活等方面消费为主的能源，其高速增长体现了十年来甘肃人民生活层面上的不断向好。</p>
+    </div>
+</div>
+
+
+<script>
+    const years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const consumption = [125.24, 132.93, 138.32, 147.62, 158.68, 173.18, 185.18, 204.85, 211.96, 222.12];
+    const proportions = [4.19, 4.45, 4.63, 4.93, 4.98, 5.27, 5.29, 5.25, 5.46, 5.88];
+
+    const chart = echarts.init(document.getElementById('chart'));
+    chart.setOption({
+        title: { text: '2014-2023年天然气消费量变化', left: 'center', top: '3%' },
+        tooltip: { trigger: 'axis' },
+        grid: {
+            top: '14%',
+            bottom: '3.5%',
+            containLabel: true
+        },
+        legend: { top: '5%', data: ['天然气消费量', '占总量百分比'], top: '8%' },
+        nameTextStyle: {
+            fontSize: 14
+        },
+        xAxis: { type: 'category', axisLabel: { fontSize: 14 }, data: years },
+        yAxis: [
+            { type: 'value', name: '天然气消费量 (万吨标准煤)', axisLabel: { fontSize: 14 }, position: 'left' },
+            { type: 'value', name: '占总量百分比 (%)', axisLabel: { fontSize: 14 }, position: 'right' }
+        ],
+        series: [
+            {
+                name: '天然气消费量',
+                type: 'bar',
+                data: consumption,
+                itemStyle: { color: '#4bc0c0' },
+                label: { show: true, position: 'inside', align: 'center', verticalAlign: 'middle', formatter: '{c}', color: 'white' }
+            },
+            {
+                name: '占总量百分比',
+                type: 'line',
+                yAxisIndex: 1,
+                data: proportions,
+                itemStyle: { color: '#36a2eb' },
+                lineStyle: {
+                    width: 3
+                },
+                symbolSize: 5,
+                label: { show: true, position: 'top', formatter: '{c}%' },
+                markPoint: {
+                    data: proportions.map((value, idx) => ({
+                        type: 'max',
+                        name: 'Max Proportion',
+                        coord: [years[idx], value],
+                        value: `${value.toFixed(2)}%`
+                    }))
+                }
+            }
+        ]
+    });
+</script>
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span>
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

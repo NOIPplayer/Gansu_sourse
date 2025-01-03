@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						<a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li class="current_page_item"><a href="p1_1.html">能源消费量总览</a></li>
+					<li><a href="p2_1.html">行业能源消费量</a></li>
+					<li><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+    <div id="sidebar-wrapper2">
+        <div id="sidebar">
+
+            <div class="box">
+
+                <div class="box-title">切换视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="p1_1.html">总览</a></li>
+                        <li><a href="p1_2.html">电力及其他能源</a></li>
+                        <li><a href="p1_3.html">原油</a></li>
+                        <li><a href="p1_4.html">原煤</a></li>
+                        <li><a href="p1_5.html">天然气</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">对比视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="otherp1_1.html">能源消费量与生产量</a></li>
+                        <li><a href="otherp1_2.html">能源弹性系数</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">下载数据</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="data/GSsourse/1.xls">数据表1</a></li>
+                        <li><a href="data/GSsourse/2.xls">数据表2</a></li>
+                        <li><a href="data/GSsourse/8.xls">数据表3</a></li>
+                        <li><a href="data/GSsourse/9.xls">数据表4</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="chart" class="script_p1_1"></div>
+    <div id="pieChart" class="p1_1"></div>
+    <div class="p1_1text-container_1">
+        <p>近十年来，甘肃的能源消费量大致呈现上升趋势，尤其在2019年后，能源消费量上升势头强劲。5年间，从约7818万吨标准煤攀升至约9089万吨标准煤。</p>
+        <p>但不同种类能源的消费量上涨趋势并不相同，因此，甘肃省能源消费结构也正逐渐随着时间推移而发生改变。总体来说，我们可以看到原油和原煤的消费量基本稳定，而天然气和电能等能源的消费量则攀升迅速。10年来，甘肃全省原油和原煤的能源消费量占比从76.75%下降到66.77%，能源消费结构清洁化趋势明显。</p>
+    </div>
+    <div class="clearer">&nbsp;</div>
+</div>
+
+
+<script>
+    const data = {
+        "data": {
+            "一次电力及其他能源占能源消耗总量的比重 (%)": [19.06, 19.19, 19.4, 22.11, 24.37, 26.83, 26.64, 24.72, 24.08, 27.35263872],
+            "原油占能源消费总量的比重 (%)": [16.34, 16.15, 17.25, 17.13, 16.21, 15.5, 15.33, 14.58, 15.46, 15.34],
+            "原煤占能源消费总量的比重 (%)": [60.41, 60.21, 58.72, 55.8310961, 54.44, 52.4, 52.74, 55.45, 55, 51.43],
+            "天然气占能源消耗总量的比重 (%)": [4.19, 4.45, 4.63, 4.93, 4.98, 5.27, 5.29, 5.25, 5.46, 5.88],
+            "能源消费总量": [7521.45, 7488.5, 7299.93, 7503.63, 7822.54, 7818.02, 8104.71, 8434.23, 8667.89, 9088.69]
+        },
+        "years": [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+    };
+
+    const yearsToShow = data.years;
+    const electricity = data.data["一次电力及其他能源占能源消耗总量的比重 (%)"].map((percentage, index) => (percentage / 100) * data.data["能源消费总量"][index]);
+    const oil = data.data["原油占能源消费总量的比重 (%)"].map((percentage, index) => (percentage / 100) * data.data["能源消费总量"][index]);
+    const coal = data.data["原煤占能源消费总量的比重 (%)"].map((percentage, index) => (percentage / 100) * data.data["能源消费总量"][index]);
+    const gas = data.data["天然气占能源消耗总量的比重 (%)"].map((percentage, index) => (percentage / 100) * data.data["能源消费总量"][index]);
+    const totalEnergy = data.data["能源消费总量"];
+
+    let chart;
+    let pieChart;
+
+    chart = echarts.init(document.getElementById('chart'));
+    chart.setOption({
+        title: {
+            text: '2014-2023年能源消费总量堆积柱状图',
+            left: 'center',
+            top: '3%'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: (params) => {
+                let tooltipText = `${params[0].name}<br>`;
+                params.forEach(param => {
+                    tooltipText += `${param.seriesName}: ${param.value.toFixed(2)}<br>`;
+                });
+                return tooltipText;
+            }
+        },
+        grid: {
+            left: '5%',
+            right: '9%',
+            top: '14%',
+            bottom: '3.5%',
+            containLabel: true
+        },
+        legend: {
+            top: '8%',
+            data: ['电力及其他能源', '原油', '原煤', '天然气']
+        },
+        nameTextStyle: {
+            fontSize: 14
+        },
+        xAxis: {
+            type: 'category',
+            data: yearsToShow,
+            axisLabel: {
+                interval: 0,
+                fontSize: 14
+            }
+        },
+        yAxis: {
+            type: 'value',
+            name: '能源消费量（单位：万吨标准煤）',
+            axisLabel: { fontSize: 14 },
+            nameLocation: 'middle',
+            nameGap: 55
+        },
+        series: [
+        { 
+            name: '电力及其他能源', 
+            type: 'bar', 
+            stack: 'total', 
+            data: electricity, 
+            itemStyle: { color: '#ff6384' }, 
+            emphasis: { itemStyle: {opacity: 1, borderColor: '#000', borderWidth: 1 }}
+        },
+        { 
+            name: '原油', 
+            type: 'bar', 
+            stack: 'total', 
+            data: oil, 
+            itemStyle: { color: '#36a2eb' }, 
+            emphasis: { itemStyle: {opacity: 1, borderColor: '#000', borderWidth: 1 }}
+        },
+        { 
+            name: '原煤', 
+            type: 'bar', 
+            stack: 'total', 
+            data: coal, 
+            itemStyle: { color: '#ff9f40' }, 
+            emphasis: { itemStyle: {opacity: 1, borderColor: '#000', borderWidth: 1 }}
+        },
+        { 
+            name: '天然气', 
+            type: 'bar', 
+            stack: 'total', 
+            data: gas, 
+            itemStyle: { color: '#4bc0c0' }, 
+            emphasis: { itemStyle: {opacity: 1, borderColor: '#000', borderWidth: 1 }}
+        },
+        {
+            name: '总消费量',
+            type: 'pictorialBar',
+            data: totalEnergy,
+            symbol: 'none',
+            label: { 
+                show: true, 
+                position: 'top', 
+                formatter: function(params) {
+                    return Math.round(params.value);
+                }   
+            }
+        }]
+    });
+
+    function initPieChart() {
+        pieChart = echarts.init(document.getElementById('pieChart'));
+        const totalData = getTotalData();
+        pieChart.setOption({
+            series: [{
+                name: '能源消费量占比',
+                type: 'pie',
+                radius: '50%',
+                data: totalData,
+                label: {
+                    formatter: '{b}: {d}%',
+                    position: 'outside',
+                    color: '#000'
+                },
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }
+            }],
+            title: {
+                text: '2014-2023年不同能源种类消费量占比',
+                left: 'center',
+                top: '5%'
+            }
+        });
+    }
+
+    function getTotalData() {
+        let totalCoal = 0, totalOil = 0, totalGas = 0, totalElectricity = 0;
+        yearsToShow.forEach((year, index) => {
+            totalCoal += coal[index];
+            totalOil += oil[index];
+            totalGas += gas[index];
+            totalElectricity += electricity[index];
+        });
+        return [
+            { name: '原煤', value: totalCoal, itemStyle: { color: '#ff9f40' } },
+            { name: '原油', value: totalOil, itemStyle: { color: '#36a2eb' } },
+            { name: '天然气', value: totalGas, itemStyle: { color: '#4bc0c0' } },
+            { name: '电力及其他能源', value: totalElectricity, itemStyle: { color: '#ff6384' } }
+        ];
+    }
+
+    function updatePieChart(year) {
+        const yearData = getYearData(year);
+        if (yearData) {
+            pieChart.setOption({
+                title: {
+                    text: `${year}年不同能源种类消费量占比`,
+                },
+                series: [{
+                    name: '能源消费量占比',
+                    type: 'pie',
+                    radius: '50%',
+                    data: yearData,
+                    label: {
+                        formatter: '{b}: {d}%',
+                        position: 'outside',
+                        color: '#000'
+                    },
+                    itemStyle: {
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }
+                }]
+            });
+        }
+    }
+
+    function getYearData(year) {
+        const yearIndex = yearsToShow.indexOf(year);
+        if (yearIndex !== -1) {
+            return [
+                { name: '原煤', value: coal[yearIndex], itemStyle: { color: '#ff9f40' } },
+                { name: '原油', value: oil[yearIndex], itemStyle: { color: '#36a2eb' } },
+                { name: '天然气', value: gas[yearIndex], itemStyle: { color: '#4bc0c0' } },
+                { name: '电力及其他能源', value: electricity[yearIndex], itemStyle: { color: '#ff6384' } }
+            ];
+        }
+        return null;
+    }
+
+    initPieChart();
+
+    chart.on('mouseover', function (params) {
+        if (params.componentType === 'series') {
+            updatePieChart(yearsToShow[params.dataIndex]);
+        }
+    });
+
+</script>
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span> 
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

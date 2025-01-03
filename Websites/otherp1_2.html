@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						 <a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li class="current_page_item"><a href="p1_1.html">能源消费量总览</a></li>
+					<li><a href="p2_1.html">行业能源消费量</a></li>
+					<li><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+	<div id="sidebar-wrapper2">
+        <div id="sidebar">
+
+            <div class="box">
+
+                <div class="box-title">切换视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="p1_1.html">总览</a></li>
+                        <li><a href="p1_2.html">电力及其他能源</a></li>
+                        <li><a href="p1_3.html">原油</a></li>
+                        <li><a href="p1_4.html">原煤</a></li>
+                        <li><a href="p1_5.html">天然气</a></li>
+					</ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">对比视图</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="otherp1_1.html">能源消费量与生产量</a></li>
+                        <li><a href="otherp1_2.html">能源弹性系数</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <div class="box-title">下载数据</div>
+
+                <div class="box-content">
+                    <ul class="nice-list">
+                        <li><a href="data/GSsourse/1.xls">数据表1</a></li>
+                        <li><a href="data/GSsourse/2.xls">数据表2</a></li>
+						<li><a href="data/GSsourse/8.xls">数据表3</a></li>
+                        <li><a href="data/GSsourse/9.xls">数据表4</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="chart" class="script"></div>
+	<div class="p1_2text-container_2">
+        <p>能源弹性系数用于衡量能源投入（生产或消费）对生产（GDP）变化的影响程度。可以看到，甘肃省能源生产弹性系数在十年间波动明显，整体呈现上升趋势，且2022和2023年远高于1，经济增长对能源生产敏感。反观消费弹性系数始终在0-1之间且较为稳定，这意味着经济增长对能源消费并不敏感。换言之，当前的甘肃省是一个能源开发能力有余而需求增长乏力的省份，拥有发达的能源生产体系，但能源密集型产业占比较低。</p>
+    </div>
+</div>
+
+<script>
+	const data = {
+		years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+		energyConsumptionElasticity: [0.36, '', '', 0.79, 0.69, '', 0.95, 0.59, 0.61, 0.77], //能源消费弹性系数
+		energyProductionElasticity: [0.78, '', '', 0.41, 1.01, 0.76, 1.35, 0.65, 2.34, 1.91] //能源生产弹性系数
+	};
+
+	//处理缺失项
+	const energyConsumptionElasticity = data.energyConsumptionElasticity.map(item => item === '' ? null : item);
+	const energyProductionElasticity = data.energyProductionElasticity.map(item => item === '' ? null : item);
+
+	const chart = echarts.init(document.getElementById('chart'));
+
+	const option = {
+		title: {
+			text: '2014-2023 年能源消费与生产弹性系数变化',
+			left: 'center',
+			top: '2%'
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross'
+			},
+			formatter: params => {
+				const year = params[0].name;
+				const consumptionElasticity = params.find(item => item.seriesName === '能源消费弹性系数')?.value ?? '数据缺失';
+				const productionElasticity = params.find(item => item.seriesName === '能源生产弹性系数')?.value ?? '数据缺失';
+				return `
+					${year}<br/> 
+					能源消费弹性系数: ${consumptionElasticity}<br/>
+					能源生产弹性系数: ${productionElasticity}
+				`;
+			}
+		},
+		legend: {
+			data: ['能源消费弹性系数', '能源生产弹性系数'],
+			top: '7%'
+		},
+		grid: {
+			top: '12%'
+		},
+		nameTextStyle: {
+			fontSize: 14
+		},
+		xAxis: {
+			type: 'category',
+			data: data.years,
+			axisLabel: { fontSize: 14 }
+		},
+		yAxis: {
+			type: 'value',
+			name: '弹性系数',
+			position: 'left',
+			axisLabel: { fontSize: 14 },
+			min: 0,
+			max: 2.5,
+			splitLine: {
+				show: true
+			}
+		},
+		series: [
+			{
+				name: '能源消费弹性系数',
+				type: 'line',
+				data: energyConsumptionElasticity,
+				symbol: 'triangle',
+				symbolSize: 8,
+				lineStyle: {
+					color: '#FF7F50',
+					width: 3
+				},
+				itemStyle: {
+					color: '#FF7F50'
+				},
+				emphasis: {
+					focus: 'series',
+					itemStyle: {
+						color: '#FF4500',
+						borderColor: '#FFD700',
+						borderWidth: 2,
+						symbolSize: 12
+					}
+				},
+				label: {
+					show: true,
+					position: 'top',
+					fontSize: 12,
+					color: '#FF7F50'
+				},
+				markLine: {
+					silent: true,
+					data: [
+						{
+							yAxis: 1,
+							lineStyle: {
+								type: 'dashed',
+								color: '#000',
+								width: 2
+							},
+							label: {
+								show: true,
+								position: 'end',
+								formatter: '弹性系数=1',
+								color: '#000',
+								fontWeight: 'bold'
+							}
+						}
+					]
+				}
+			},
+			{
+				name: '能源生产弹性系数',
+				type: 'line',
+				data: energyProductionElasticity,
+				symbol: 'circle',
+				symbolSize: 8,
+				lineStyle: {
+					color: '#4682B4',
+					width: 3
+				},
+				itemStyle: {
+					color: '#4682B4'
+				},
+				emphasis: {
+					focus: 'series',
+					itemStyle: {
+						color: '#1E90FF',
+						borderColor: '#87CEEB',
+						borderWidth: 2,
+						symbolSize: 12
+					}
+				},
+				label: {
+					show: true,
+					position: 'top',
+					fontSize: 12,
+					color: '#4682B4'
+				}
+			}
+		]
+		
+	};
+
+	chart.setOption(option);
+
+	window.addEventListener('resize', () => {
+		chart.resize();
+	});
+</script>
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span>
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

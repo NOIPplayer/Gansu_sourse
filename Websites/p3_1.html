@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<meta charset="utf-8">
+    <title>甘肃能源消费数据剖析</title>
+    <script src="https://cdn.staticfile.net/echarts/4.3.0/echarts.min.js"></script>
+
+    <style>
+        .niceButton4{
+            background-color: #f9e494;
+            border: none;
+            border-radius: 12px;
+            color:white;
+            padding: 10px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            -webkit-transition-duration: 0.4s;
+        }
+        .niceButton4:hover{
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,.24),
+            0 17px 50px 0 rgba(0,0,0,.19);
+        }
+    </style>
+
+</head>
+
+<body id="top">
+
+<div id="header-wrapper">
+	<div id="header-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="header">
+
+				<div id="lzu_logo"></div>
+				<div id="logo">
+					<h1 id="site-title"><a href="index.html">甘肃能源消费数据剖析</a></h1>
+					<h2 id="site-slogan">小组成员：李有龙、范圣如、李阳泽（排名不分先后）</h2>
+					<h2 id="site-slogan">指导老师：赵志立</h2>
+				</div>
+
+				<div id="help-wrapper">
+					<div id="help">
+
+						<a href="contact_us.html">联系我们</a> <span class="text-separator">|</span>
+						<a href="https://github.com/NOIPplayer/Gansu_sourse">访问 Github 项目</a> <span class="text-separator">
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="navigation-wrapper">
+	<div id="navigation-wrapper-2">
+		<div class="center-wrapper">
+
+			<div id="navigation">
+
+				<ul class="tabbed">
+					<li><a href="index.html">主页</a></li>
+					<li><a href="p1_1.html">能源消费量总览</a></li>
+					<li><a href="p2_1.html">行业能源消费量</a></li>
+					<li class="current_page_item"><a href="p3_1.html">生活能源消费量</a></li>
+					<li><a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a></li>
+				</ul>
+
+				<div class="clearer">&nbsp;</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="bc">
+	<div id="main2" class="p3_2"></div>
+    <div id="button-container" class="p3_1_button">
+        <button id="btn-option2" class="niceButton4">展示各类能源总体生活消费量</button>
+        <button id="btn-option3" class="niceButton4">展示各类能源人均生活消费量</button>
+    </div>
+    <div id="main1" class="p3_1"></div>
+    <div class="p3_1_text-container_1">
+        <p>在过去的十年间，甘肃省在生活能源总体消费量和生活能源人均消费量持续上升，且每年的增长幅度相对稳定，显示出一种稳定而持续的增长趋势。这种增长模式反映了甘肃省经济的稳步发展、居民生活水平的提高以及能源需求的相应增加。</p>
+        <p>然而，在2020年至2021年间，生活能源消费量的上升幅度相较于之前几年出现了明显的收窄。这一变化很可能与全球范围内爆发的新冠疫情密切相关。</p>
+        <p>除了能源消费量的变化外，通过对比十年来不同时间点的气泡图，我们还可以发现甘肃省居民能源使用结构发生了显著变化。具体来说，煤炭在生活能源中所占的比重逐渐降低，而天然气和电力的比重则呈现出逐年增加的趋势。这一变化表明，甘肃省居民在能源选择上正逐渐从传统的、高污染的煤炭转向更为清洁、环保的天然气和电力。</p>
+        <p>综上所述，过去十年间甘肃省在生活能源消费方面呈现出总量上升、结构优化的特点。尽管在特定时期受到疫情等因素的影响，能源消费量增长放缓，但整体而言，甘肃省居民能源使用结构的绿色化转型仍在进行中，并有望为未来的可持续发展奠定坚实基础。</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+                const years = ['2014', '2015', '2016', '2017', '2018','2019','2020','2021','2022','2023'];
+                const total = [662.43, 791.7648, 804.77, 845.72, 906.1818, 938.14, 984.8, 994.72, 1016.328, 1043.59];
+                const average = [256.11, 305.09, 313.73, 328.25, 344.36, 355.04, 393.13, 398.6, 407.96, 420.98];
+
+                var barChart = echarts.init(document.getElementById('main1'));
+                var bubbleChart = echarts.init(document.getElementById('main2'));
+
+                var option1 = {
+                    title: {
+                        text: '2014-2023年甘肃生活能源消费量',
+                        left: 'center',
+                        top: '10px'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend:{
+                        data:['总体生活能源消费量','人均生活能源消费量'],
+                        right:'center',
+                        top: '40px'
+                    },
+                    grid: {
+                        left: '8%',
+                        right: '7%',
+                        top: '70px',            
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    nameTextStyle: {
+                        fontSize: 14
+                    },
+                    xAxis: {
+                        type: 'category',
+                        axisLabel: { fontSize: 14 },
+                        data: years
+                    },
+                    yAxis: [{
+                        type: 'value',
+                        name: '总体生活能源消费量（万吨标准煤）',
+                        axisLabel: { fontSize: 14 },
+                        axisLabel:{
+                            formatter:'{value}'
+                        }
+                    },
+                    {
+                        type:'value',
+                        name:'人均生活能源消费量（千克标准煤）',
+                        axisLabel: { fontSize: 14 },
+                        min:0,
+                        max:1200,
+                        axisLabel:{
+                            formatter:'{value}'
+                        }
+                    }],
+                    series: [
+                        {
+                            name: '总体生活能源消费量',
+                            type: 'bar',
+                            tooltip:{
+                                valueFormatter:function(value){
+                                    return value + '万吨标准煤';
+                                }
+                            },
+                            data: total,
+                            itemStyle: {
+                                color: 'rgba(255,159,64,0.9)'
+                            },
+                            emphasis: {
+                                itemStyle: {
+                                    color: 'rgba(255,159,64,1)'
+                                },
+                                label: {
+                                    show: true,
+                                    formatter: '{@[0]}',
+                                    position: 'top'
+                                }
+                            }
+                        },
+                        {
+                            name:'人均生活能源消费量',
+                            type:'line',
+                            yAxisIndex: 1,
+                            tooltip:{
+                                valueFormatter:function(value){
+                                    return value + '千克标准煤';
+                                }
+                            },
+                            data:average,
+                            itemStyle:{
+                                color:'#849c4e'
+                            },
+                            lineStyle:{
+                                width: 3
+                            },
+                            symbolSize: 5,
+                            emphasis: {
+                                itemStyle: {
+                                    color: 'rgba(192, 75, 192, 1.0)',
+                                    lineStyle: {
+                                        width: 4
+                                    }
+                                },
+                                label: {
+                                    show: true,
+                                    formatter: '{@[0]}',
+                                    position: 'top'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                var yearData = {
+                    '2014': [
+                        { name: '煤炭', value: 345.5, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 6.4, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.16, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 3.6, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 2030, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 73.07, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2015': [
+                        { name: '煤炭', value: 393, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 8.5, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.16, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 4, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 3260, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 76.62, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2016': [
+                        { name: '煤炭', value: 401, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 10.3, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 4.4, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 2600, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 83.49, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2017': [
+                        { name: '煤炭', value: 394, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 10.3, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 4.45, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 3133, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 91.33, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2018': [
+                        { name: '煤炭', value: 336.14, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 13.8, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 5.2, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 4485, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 101.23, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2019': [
+                        { name: '煤炭', value: 327.45, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 14.38, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 6.06, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 4826.24, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 108.45, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2020': [
+                        { name: '煤炭', value: 310.19, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 13.39, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 8.1, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 5456.24, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 115.53, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2021': [
+                        { name: '煤炭', value: 288.97, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 14.27, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 8.57, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 5751.49, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 124.48, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2022': [
+                        { name: '煤炭', value: 279.29, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 14.33, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 8.7, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 5853.77, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 132.28, unit: '亿千瓦小时', color: '#B80002' }
+                    ],
+                    '2023': [
+                        { name: '煤炭', value: 211.99, unit: '万吨', color: '#60928F' },
+                        { name: '液化石油气', value: 14.3, unit: '万吨', color: '#00573E' },
+                        { name: '焦炉煤气', value: 0.2, unit: '亿立方米', color: '#D19504' },
+                        { name: '天然气', value: 9.32, unit: '亿立方米', color: '#FFA495' },
+                        { name: '热力', value: 6433.02, unit: '万百万千焦', color: '#F84B35' },
+                        { name: '电力', value: 138.69, unit: '亿千瓦小时', color: '#B80002' }
+                    ]
+                };
+
+                var averageData = {
+                    '2014': [
+                        { name: '人均消耗煤炭', value: 133.58, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 2.47, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.62, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 13.92, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 282.51, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2015': [
+                        { name: '人均消耗煤炭', value: 151.44, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 3.28, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.62, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 15.41, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 295.24, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2016': [
+                        { name: '人均消耗煤炭', value: 141.86, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 3.95, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.77, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 16.89, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 320.53, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2017': [
+                        { name: '人均消耗煤炭', value: 142.1, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 3.93, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.76, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 17, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 348.88, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2018': [
+                        { name: '人均消耗煤炭', value: 127.74, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.24, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.76, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 19.76, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 384.69, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2019': [
+                        { name: '人均消耗煤炭', value: 123.92, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.44, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.76, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 22.93, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 410.43, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2020': [
+                        { name: '人均消耗煤炭', value: 123.83, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.35, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.8, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 32.34, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 461.19, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2021': [
+                        { name: '人均消耗煤炭', value: 115.80, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.72, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.8, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 34.34, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 498.81, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2022': [
+                        { name: '人均消耗煤炭', value: 112.11, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.75, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.8, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 34.92, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 530.98, unit: '千瓦小时', color: '#B80002' }
+                    ],
+                    '2023': [
+                        { name: '人均消耗煤炭', value: 85.52, unit: '千克', color: '#60928F' },
+                        { name: '人均消耗液化石油气', value: 5.77, unit: '千克', color: '#00573E' },
+                        { name: '人均消耗焦炉煤气', value: 0.81, unit: '立方米', color: '#D19504' },
+                        { name: '人均消耗天然气', value: 37.60, unit: '立方米', color: '#FFA495' },
+                        { name: '人均消耗电力', value: 559.47, unit: '千瓦小时', color: '#B80002' }
+                    ]
+                };
+
+                //将原有单位换算成统一的标准煤单位
+                const conversionFactors1 = {
+                    '煤炭': 0.7143,        //1万吨煤炭 ≈ 0.7143万吨标准煤
+                    '液化石油气': 1.7143,   //1万吨液化石油气 ≈ 1.7143万吨标准煤
+                    '焦炉煤气': 5.929, //1亿立方米焦炉煤气 ≈ 5.929万吨标准煤
+                    '天然气': 12.1430,   //1亿立方米天然气 ≈ 12.1430万吨标准煤
+                    '热力': 0.03412,    //1万百万千焦热力 ≈ 0.03412万吨标准煤
+                    '电力': 1.229   //1亿千瓦小时电力 ≈ 1.229万吨标准煤
+                };
+
+                const conversionFactors = {
+                    '人均消耗煤炭': 0.7143*Math.pow(10,-7),        
+                    '人均消耗液化石油气': 1.7143*Math.pow(10,-7), 
+                    '人均消耗焦炉煤气': 5.929*Math.pow(10,-8), 
+                    '人均消耗天然气': 12.1430*Math.pow(10,-8), 
+                    '人均消耗电力': 1.229*Math.pow(10,-8)
+                };
+
+                function getBubbleData(year) {
+                    const yearDataConverted = yearData[year].map(function (item) {
+                        return {
+                            ...item,
+                            valueInTonnesCoal: item.value * conversionFactors1[item.name]
+                        };
+                    });
+
+                    const totalConsumption = yearDataConverted.reduce(function (total, item) {
+                        return total + item.valueInTonnesCoal;
+                    }, 0);
+
+                    return yearDataConverted.map(function (item, index) {
+                        const percentage = (item.valueInTonnesCoal / totalConsumption) * 100;
+                        return {
+                            name: item.name,
+                            value: [index * 15 + 15, 20, item.valueInTonnesCoal],
+                            originalValue: item.value,
+                            unit: item.unit, 
+                            itemStyle: { color: item.color },
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: function (params) {
+                                    return `${params.data.name}:\n${params.data.value[2].toFixed(2)} 万吨标准煤`;
+                                }
+                            },
+                            symbolSize: Math.sqrt(percentage) * 21
+                        };
+                    });
+                }
+
+                var option2 = {
+                    title: {
+                        text: '2014年各类能源总体生活消费量气泡图',
+                        left: 'center',
+                        top: '5%'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            return `${params.data.name}<br>原始单位消耗量: ${params.data.originalValue} ${params.data.unit}`;
+                        }
+                    },
+                    grid: {
+                        top: '20%',
+                        bottom: '20%',
+                        left: '10%',
+                        right: '10%'
+                    },
+                    xAxis: {
+                        show: false,
+                        min: 8,
+                        max: 95
+                    },
+                    yAxis: {
+                        show: false,
+                        min: 0,
+                        max: 50
+                    },
+                    series: [
+                        {
+                            name: '能源消耗',
+                            type: 'scatter',
+                            symbolSize: function getBubbleData(data) {
+                                Math.sqrt(data[2]) * 3.5;
+                            },
+                            data: getBubbleData('2014')
+                        }
+                    ]
+                };
+
+                function ave(year) {
+                    const averageDataConverted = averageData[year].map(function (item) {
+                        return {
+                            ...item,
+                            valueInTonnesCoal: item.value * conversionFactors[item.name]
+                        };
+                    });
+
+                    const averageConsumption = averageDataConverted.reduce(function (average, item) {
+                        return average + item.valueInTonnesCoal;
+                    }, 0);
+
+                    return averageDataConverted.map(function (item, index) {
+                        const percentage = (item.valueInTonnesCoal / averageConsumption) * 100;
+                        return {
+                            name: item.name,
+                            value: [index * 15 + 18, 20, item.valueInTonnesCoal],
+                            originalValue: item.value,
+                            unit: item.unit, 
+                            itemStyle: { color: item.color },
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: function (params) {
+                                    var value_new = params.data.value[2] * 10000000
+                                    return `${params.data.name}:\n${value_new.toFixed(2)} 千克标准煤`;
+                                }
+                            },
+                            symbolSize: Math.sqrt(percentage) * 21
+                        };
+                    });
+                }
+
+                var option3 = {
+                    title: {
+                        text: '2014年各类能源人均生活消费量气泡图',
+                        left: 'center',
+                        top: '5%'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params1) {
+                            var value_new = params1.data.value[2] * 10000000
+                            return `${params1.data.name}<br>原始单位消耗量: ${params1.data.originalValue} ${params1.data.unit}`;
+                        }
+                    },
+                    grid: {
+                        top: '20%',
+                        bottom: '20%',
+                        left: '10%',
+                        right: '10%'
+                    },
+                    xAxis: {
+                        show: false,
+                        min: 12,
+                        max: 83
+                    },
+                    yAxis: {
+                        show: false,
+                        min: 0,
+                        max: 50
+                    },
+                    series: [
+                        {
+                            name: '能源消耗',
+                            type: 'scatter',
+                            symbolSize: function ave(data) {
+                                Math.sqrt(data[2]) * 3.5;
+                            },
+                            data: ave('2014')
+                        }
+                    ]
+                };
+                
+
+                barChart.setOption(option1);
+
+                let currentOption = 'option2';
+                //鼠标悬停时动态更新气泡图数据
+                barChart.on('updateAxisPointer', function (event) {
+                    const xAxisInfo = event.axesInfo[0];
+                    if (xAxisInfo) {
+                        const year = years[xAxisInfo.value];
+                        let bubbleDataForYear;
+                        let titleText;
+
+                        if (currentOption === 'option2') {
+                            bubbleDataForYear = getBubbleData(year);
+                            titleText = `${year}年各类能源总体生活消费量气泡图`;
+                        } else if (currentOption === 'option3') {
+                            bubbleDataForYear = ave(year);
+                            titleText = `${year}年各类能源人均生活消费量气泡图`;
+                        }
+
+                        bubbleChart.setOption({
+                            title:{
+                                text: titleText,
+                            },
+                            series: [{
+                                data: bubbleDataForYear
+                            }]
+                        });
+                    }
+                });
+
+                //页面加载时默认展示option2
+                currentOption = 'option2';
+                setActiveButton('btn-option2');
+                bubbleChart.setOption(option2);
+
+                function setActiveButton(buttonId) {
+                    const btnOption2 = document.getElementById('btn-option2');
+                    const btnOption3 = document.getElementById('btn-option3');
+
+                    btnOption2.style.backgroundColor = '';
+                    btnOption2.style.color = '';
+                    btnOption3.style.backgroundColor = '';
+                    btnOption3.style.color = '';
+
+                    const activeButton = document.getElementById(buttonId);
+                    activeButton.style.backgroundColor = '#fe8d2b';
+                    activeButton.style.color = 'white';
+                }
+
+                document.getElementById('btn-option2').addEventListener('click', () => {
+                    currentOption = 'option2';
+                    setActiveButton('btn-option2');
+
+                    const year = years[0];
+                    bubbleChart.setOption(option2);
+                });
+
+                document.getElementById('btn-option3').addEventListener('click', () => {
+                    currentOption = 'option3';
+                    setActiveButton('btn-option3');
+
+                    const year = years[0];
+                    bubbleChart.setOption(option3);
+                });
+
+            })
+
+</script>
+
+<div id="footer-wrapper">
+
+	<div class="center-wrapper">
+
+		<div id="footer">
+
+			<div class="left">
+				<a href="index.html">主页</a> <span class="text-separator">|</span> 
+                <a href="p1_1.html">能源消费量总览</a> <span class="text-separator">|</span>
+                <a href="p2_1.html">行业能源消费量</a> <span class="text-separator">|</span> 
+                <a href="p3_1.html">生活能源消费量</a> <span class="text-separator">|</span> 
+                <a href="https://tjj.gansu.gov.cn/tjj/c109464/info_disp.shtml">数据来源</a> <span class="text-separator">|</span> 
+			</div>
+
+			<div class="right">
+				<a href="#">到顶 ^</a>
+			</div>
+
+			<div class="clearer">&nbsp;</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="bottom">
+
+	<div class="center-wrapper">
+
+		<div class="left">
+			&copy; 2024 甘肃能源消费数据剖析 <span class="text-separator">|</span> <a href="#">Privacy Policy</a> <span class="text-separator">|</span> <a href="#">Terms of Use</a>
+		</div>
+		<div class="clearer">&nbsp;</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>
